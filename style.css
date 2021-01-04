@@ -1,0 +1,86 @@
+body {
+    font-family: 'Varela Round', sans-serif;
+    font-size: 15px;  
+    color: #566787;
+    background: #f5f5f5;
+}
+
+.table-size {
+    background: #fff;
+    padding: 20px 25px;
+    margin: 30px 0;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+.table-title {
+    padding-bottom: 15px;
+    background: #435d7d;
+    color: #fff;
+    padding: 16px 30px;
+    margin: -20px -25px 10px;
+    border-radius: 3px 3px 0 0;
+}
+.table-title h2 {
+    margin: 5px 0 0;
+    font-size: 24px;
+}
+
+.table-title span {
+    font-weight: 200;
+}
+#add-employee {
+    position: absolute;
+    top: 45px;
+    right: 25px;
+    width: 200px;
+    height: 35px;
+    
+}
+#add-employee a {
+    display: flex;
+    width: 150px;
+    padding: 6px 12px;
+    border-radius: 2px;
+    font-size: 13px;
+    background-color: #5cb85c;
+    border-color: #3c413c;
+    color: #fff;
+}
+
+#add-employee span {
+    font-size: 13px;
+    outline: none;
+    align-self: center;
+    padding: 1px;
+}
+.filter {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    height: auto;
+    padding-right: 30px;
+}
+.filter input {
+    width: 95%;
+    height: 25px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    padding: 6px 12px;
+    margin-right: 290px;
+    margin-top: 20px;
+    line-height: 5;
+}
+
+.table-container{
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    color: #566787;
+    margin-top: 20px;
+}
+
+table {
+    font-size: 14px;
+    width: 100%;
+}
