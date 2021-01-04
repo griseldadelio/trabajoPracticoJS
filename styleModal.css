@@ -1,0 +1,86 @@
+.modal-open {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    overflow: hidden;
+}
+
+body{
+    color: #566787;
+    background: #fcfafa;
+    font-family: 'Varela Round', sans-serif;
+    font-size: 13px;
+}
+
+/*modal*/
+
+#addEmployeeModal, #editEmployeeModal, #deleteEmployeeModal {
+border: 2px solid grey;
+margin: 2px 5px 5px 5px;
+width: 60%; /*cuando lo usemos con JS se ajusta*/
+}
+
+.modal-header{
+    border-bottom: 1px solid #e5e5e5;
+    margin: 0px 10px 0px 10px;
+
+}
+
+.modal-body{
+    display:inline-block;
+    justify-content: center;
+    margin: 7px 10px 7px 10px;
+}
+
+.modal-footer {
+    text-align: right;
+    border-top: 1px solid #e5e5e5;
+    margin: 2px 0px 2px 1px;
+}
+
+.modal .modal-title {
+    display: inline-block;
+    font-size: 18px;
+}
+.modal .modal-footer{
+    background: #ecf0f1;
+    border-radius: 0 0 3px 3px;
+}
+
+/*formulario*/
+form {
+    display: block;
+}
+.form-group{
+margin: 4px 2px 4px 2px;
+}
+
+#userid{
+    margin: 4px 10px 0px 10px;
+}
+
+/*BOTONES*/
+.close {
+    float: right;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    opacity: .2; 
+    margin-top: 2px;
+}
+
+.btn-add{
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+
+.btn-cancel {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
