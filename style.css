@@ -13,6 +13,7 @@ body {
     max-width: 100%;
 }
 
+/* Cabezera de la tabla y titulo */
 .table-size {
     background: #fff;
     padding: 20px 25px;
@@ -35,6 +36,8 @@ body {
 .table-title span {
     font-weight: 200;
 }
+
+/* Boton Add Employee */
 #add-employee {
     position: absolute;
     top: 45px;
@@ -59,6 +62,8 @@ body {
     align-self: center;
     padding: 0.5px;
 }
+
+/* Input filter */
 .filter {
     display: flex;
     justify-content: flex-end;
@@ -78,21 +83,35 @@ body {
     line-height: 5;
 }
 
+/* Tabla de users */
 .table-container{
     display: flex;
     justify-content:center;
     flex-direction: column;
-    color: #566787;
     margin-top: 20px;
     margin-bottom: 20px;
-    border-bottom: 2px solid rgb(196, 196, 196);
+ }
+
+/* Formato de tabla con css */
+#data-base table td,
+#data-base table th {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid rgb(198, 198, 211);
+}   
+
+#data-base tr:nth-child(even) {
+    background-color: #f3f1f1;
+    }
+
+#data-base tr:hover {
+    background-color: rgb(219, 215, 215);
 }
 
-table {
-    font-size: 14px;
+#data-base table {
+    border-collapse: collapse;
     width: 100%;
-}
-
-#checkbox{
-    justify-content: left;
-}
+    font-size: 14px;
+    margin-bottom: 20px;
+    min-width: 700px;
+    }
