@@ -12,11 +12,8 @@
     <title>Modal</title>
 </head>
 
-<body class="modal-open">
+<body>
     <!--MODAL ADD EMPLOYEE-->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
-        add Empleado </button>
-
     <div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -60,7 +57,7 @@
         </div>
     </div>
 
-    <!--MODAL EDIT EMPLOYEE-->
+    <!--MODAL EDIT EMPLOYEE
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editEmployeeModal">
         edit Empleado </button>
 
@@ -76,7 +73,7 @@
                             <div class="form-group column">
                                 <label for="name" class="col-sm-2 col-form-label">Name</label>
                                 <div class="col-sm-10">
-                                    <input id="name" type="text" class="form-control" required>
+                                    <input id="name" type="text" class="form-control" maxlength="50" required>
                                 </div>
                             </div>
                             <div class="form-group column">
@@ -88,7 +85,7 @@
                             <div class="form-group column">
                                 <label for="address" class="col-sm-2 col-form-label">Address</label>
                                 <div class="col-sm-10">
-                                    <textarea id="address" class="form-control" required></textarea>
+                                    <textarea id="address" class="form-control" maxlength="60" required></textarea>
                                 </div>
                             </div>
                             <div class="form-group column">
@@ -107,7 +104,7 @@
         </div>
     </div>
 
-    <!--MODAL EDIT EMPLOYEE-->
+   MODAL DELETE EMPLOYEE
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteEmployeeModal">
         delete Empleado </button>
 
@@ -161,8 +158,8 @@
                 </div>
             </div>
         </div>
-    </div>
-
+    </div>-->
+    <script src="functionAdd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
         integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU"
         crossorigin="anonymous"></script>

@@ -59,3 +59,22 @@ body {
     margin-right: 5px;
 }
 
+/*modal*/
+.modal{
+    color: #566787;
+    font-size: 13px;
+}
+
+.modal .modal-header, .modal .modal-body, .modal .modal-footer {
+    padding: 20px 30px;
+}
+
+.modal .modal-footer{
+    background: #ecf0f1;
+    border-radius: 0 0 3px 3px;
+}
+
+.modal .modal-footer .btn {
+    margin: 0px 5px 0px 5px;
+    width: 20%;
+}
