@@ -80,3 +80,8 @@ body {
     margin: 0px 5px 0px 5px;
     width: 20%;
 }
+
+/* modal mostrar */
+.nomostrar {
+    display: none;
+  }
