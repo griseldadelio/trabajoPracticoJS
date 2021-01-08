@@ -122,6 +122,8 @@ const filterUsers = () => {
                 .then(response => response.json())
                 .then(data => {
                     showUsers(data)
+                    editUsers(data)
+                    deleteUsers(data)
                 })
         }
     }
