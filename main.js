@@ -4,7 +4,7 @@ const deleteIcon = document.getElementsByClassName("delete");
 const form = document.getElementById("formUserInformation");
 const urlBase = 'https://5ff3193428c3980017b18f70.mockapi.io';
 
-const createObject = () => {
+const createUser = () => {
     const fullname = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const address = document.getElementById('address').value;
@@ -13,7 +13,7 @@ const createObject = () => {
     return { fullname, email, address, phone }
 }
 
-const validateObject = (user) => {
+const validateUser = (user) => {
     validateEmail(user.email);
     validatePhone(user.phone);
 
@@ -66,8 +66,8 @@ const showUsers = (data) => {
 
 const registerUser = (e) => {
     e.preventDefault()
-    const user = createObject();
-    if (validateObject(user) == false) {
+    const user = createUser();
+    if (validateUser(user) == false) {
         return
     }
     fetch(`${urlBase}/users`, {
@@ -104,7 +104,7 @@ const editUsers = (data) => {
                     const save = document.getElementById('edit')
 
                     save.onclick = () => {
-                        createObject()
+                        createUser()
                         const newEmployee = {
                             fullname: name,
                             email: email,
@@ -185,45 +185,45 @@ filterUsers()
 
 const modalNewEmployee = (name = "", email = "", address = "", phone = "") => {
     modal.innerHTML = `
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" > Employee Info</h5>
-                </div>        
-                <div class="modal-body" id="modalBody">
-                    <div class="container-fluid">
-                        <div class="form-group column">
-                            <label for="name" class="col-sm-2 col-form-label">Name</label>
-                                <div class="col-sm-10">
-                                    <input type="text" id="name" class="form-control"  maxlength="50" value=${name}>
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" > Employee Info</h5>
+                    </div>     
+                        <div class="modal-body" id="modalBody">
+                            <div class="container-fluid">
+                                <div class="form-group column">
+                                    <label for="name" class="col-sm-2 col-form-label">Name</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" id="name" class="form-control"  maxlength="50" value=${name}>
+                                        </div>
                                 </div>
-                        </div>
-                        <div class="form-group column">
-                            <label for="name" class="col-sm-2 col-form-label">Email</label>
-                                <div class="col-sm-10">
-                                    <input type="email" id="email" class="form-control"  maxlength="50" value=${email}>
+                                <div class="form-group column">
+                                    <label for="name" class="col-sm-2 col-form-label">Email</label>
+                                        <div class="col-sm-10">
+                                            <input type="email" id="email" class="form-control"  maxlength="50" value=${email}>
+                                        </div>
                                 </div>
-                        </div>
-                        <div class="form-group column">
-                            <label for="name" class="col-sm-2 col-form-label">Adress</label>
-                                <div class="col-sm-10">
-                                    <textarea id="address" class="form-control" value=${address}></textarea>
+                                <div class="form-group column">
+                                    <label for="name" class="col-sm-2 col-form-label">Adress</label>
+                                        <div class="col-sm-10">
+                                            <textarea id="address" class="form-control" value=${address}></textarea>
+                                        </div>
                                 </div>
-                        </div>
-                        <div class="form-group column">
-                            <label for="name" class="col-sm-2 col-form-label">Phone</label>
-                            <div class="col-sm-10">
-                                <input type="text" id="phone" class="form-control"  maxlength="50" value=${phone}>
-                            </div>
-                        </div>                         
-                    </div>                 
-                </div>  
-                <div class="modal-footer bg-light">
-                    <button id='cancel' class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                    <button id='edit' class="btn btn-success">Save</button>
-                </div>                                      
-            </div>
-        </div>`
+                                <div class="form-group column">
+                                    <label for="name" class="col-sm-2 col-form-label">Phone</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="phone" class="form-control"  maxlength="50" value=${phone}>
+                                    </div>
+                                </div>                         
+                            </div>                 
+                        </div>  
+                        <div class="modal-footer bg-light">
+                            <button id='cancel' class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button id='edit' class="btn btn-success">Save</button>
+                        </div>                                      
+                    </div>
+            </div>`
     const cancel = document.getElementById("cancel");
     cancel.onclick = () => {
         modal.classList.add("nomostrar");
