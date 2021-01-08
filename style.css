@@ -60,3 +60,8 @@ body {
     font-size: 21px;
     margin-right: 5px;
 }
+
+/* modal mostrar */
+.nomostrar {
+    display: none;
+  }
