@@ -14,16 +14,10 @@ const createUser = () => {
 }
 
 const validateUser = (user) => {
-    validateEmail(user.email);
-    validatePhone(user.phone);
-
-    if (user.fullname.length > 50) {
-        alert('Exceso de caracteres')
-    }
-
-    if (user.address > 60) {
-        alert('Exceso de caracteres')
-    }
+    validateName(user.fullname)
+    validateEmail(user.email)
+    validatePhone(user.phone)
+    validateAddress(user.address)
 }
 
 /* Funcion para traer los datos */
@@ -53,8 +47,8 @@ const showUsers = (data) => {
         <td>${element.address}</td>
         <td>${element.phone}</td>
         <td>
-            <i class="material-icons edit bg-warning" id="${element.id}"  title="Edit">&#xE254;</i>
-            <i class="material-icons delete bg-danger" id="${element.id}" title="Delete">&#xE872;</i>
+            <i class="material-icons edit bg-warning text-light " id="${element.id}"  title="Edit">&#xE254;</i>
+            <i class="material-icons delete bg-danger text-light" id="${element.id}" title="Delete">&#xE872;</i>
         </td> 
         </tr>`
     });
@@ -78,12 +72,26 @@ const registerUser = (e) => {
         body: JSON.stringify(user)
     })
         .then(() => {
-            alert('Registro generado exitosamente')
-            location.reload()
-        })
+            $.notify({
+                icon: 'material-icons check_circle',
+                message: '<b>Registro generado existosamente</b>',
+            },{
+                type: 'success'
+            },
+            {z_index: 5000},
+            );
+            location.reload()         
+        })        
         .catch(error => {
             console.error(error)
-            alert('Se ha producido un error')
+            $.notify({
+                icon: 'material-icons check_circle',
+                title: "<strong>Error</strong> ",
+                message: 'Se ha producido un error',
+            },{
+                type: "danger",
+               z_index: 3000
+            })
         })
 }
 
@@ -119,6 +127,7 @@ const editUsers = (data) => {
                             .then(response => response.json())
                             .then(data => {
                                 getUsers(data);
+                                location.reload();
                             })
                     }
                 }
@@ -150,7 +159,8 @@ const deleteUsers = (data) => {
                                 fetch(`${urlBase}/users`)
                                     .then(response => response.json(data))
                                     .then(data => {
-                                        getUsers(data)
+                                        getUsers(data);
+                                        location.reload();
                                     })
                             })
                     }
@@ -229,3 +239,4 @@ const modalNewEmployee = (name = "", email = "", address = "", phone = "") => {
         modal.classList.add("nomostrar");
     };
 };
+
