@@ -16,8 +16,8 @@ const createUser = () => {
 const validateUser = (user) => {
     validateName(user.fullname)
     validateEmail(user.email)
-    validatePhone(user.phone)
     validateAddress(user.address)
+    validationForm();
 }
 
 /* Funcion para traer los datos */
@@ -41,7 +41,7 @@ const showUsers = (data) => {
     data.forEach(element => {
         dataBase += `
         <tr> 
-        <td><input type="checkbox"></td>
+        <td><input type="checkbox" class="sel"></td>
         <td>${element.fullname}</td>
         <td>${element.email}</td>
         <td>${element.address}</td>
@@ -72,26 +72,14 @@ const registerUser = (e) => {
         body: JSON.stringify(user)
     })
         .then(() => {
-            $.notify({
-                icon: 'material-icons check_circle',
-                message: '<b>Registro generado existosamente</b>',
-            },{
-                type: 'success'
-            },
-            {z_index: 5000},
-            );
-            location.reload()         
-        })        
+            toastr.success(`Usuario registrado exitosamente`)
+            setTimeout(() => {
+                location.reload()
+            }, 3000)
+        })
         .catch(error => {
             console.error(error)
-            $.notify({
-                icon: 'material-icons check_circle',
-                title: "<strong>Error</strong> ",
-                message: 'Se ha producido un error',
-            },{
-                type: "danger",
-               z_index: 3000
-            })
+            toastr.error('Se ha producido un error, por favor intenta más tarde')
         })
 }
 
@@ -113,21 +101,18 @@ const editUsers = (data) => {
 
                     save.onclick = () => {
                         createUser()
-                        const newEmployee = {
-                            fullname: name,
-                            email: email,
-                            address: address,
-                            phone: phone,
-                        };
                         fetch(`${urlBase}/users/${element.id}`, {
                             method: 'PUT',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(newEmployee),
+                            body: JSON.stringify(createUser()),
                         })
                             .then(response => response.json())
                             .then(data => {
                                 getUsers(data);
-                                location.reload();
+                                toastr.success(`Datos actualizados exitosamente`);
+                                setTimeout(() => {
+                                    location.reload()
+                                }, 3000);
                             })
                     }
                 }
@@ -135,7 +120,6 @@ const editUsers = (data) => {
         }
     }
 }
-
 
 /* Funcion para eliminar Usuario */
 
@@ -149,6 +133,7 @@ const deleteUsers = (data) => {
                     modalNewEmployee(element.fullname, element.email, element.address, element.phone)
 
                     const save = document.getElementById('edit')
+
                     save.onclick = () => {
                         fetch(`${urlBase}/users/${userRemove}`, {
                             method: 'DELETE',
@@ -160,7 +145,10 @@ const deleteUsers = (data) => {
                                     .then(response => response.json(data))
                                     .then(data => {
                                         getUsers(data);
-                                        location.reload();
+                                        toastr.success(`Usuario eliminado exitosamente`);
+                                        setTimeout(() => {
+                                            location.reload()
+                                        }, 3000);
                                     })
                             })
                     }
@@ -170,6 +158,7 @@ const deleteUsers = (data) => {
     }
 }
 
+/*Checkbox general*/
 
 /* Funcion para Filtrar lista de usuarios */
 
@@ -195,45 +184,33 @@ filterUsers()
 
 const modalNewEmployee = (name = "", email = "", address = "", phone = "") => {
     modal.innerHTML = `
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" > Employee Info</h5>
-                    </div>     
-                        <div class="modal-body" id="modalBody">
-                            <div class="container-fluid">
-                                <div class="form-group column">
-                                    <label for="name" class="col-sm-2 col-form-label">Name</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" id="name" class="form-control"  maxlength="50" value=${name}>
-                                        </div>
-                                </div>
-                                <div class="form-group column">
-                                    <label for="name" class="col-sm-2 col-form-label">Email</label>
-                                        <div class="col-sm-10">
-                                            <input type="email" id="email" class="form-control"  maxlength="50" value=${email}>
-                                        </div>
-                                </div>
-                                <div class="form-group column">
-                                    <label for="name" class="col-sm-2 col-form-label">Adress</label>
-                                        <div class="col-sm-10">
-                                            <textarea id="address" class="form-control" value=${address}></textarea>
-                                        </div>
-                                </div>
-                                <div class="form-group column">
-                                    <label for="name" class="col-sm-2 col-form-label">Phone</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" id="phone" class="form-control"  maxlength="50" value=${phone}>
-                                    </div>
-                                </div>                         
-                            </div>                 
-                        </div>  
-                        <div class="modal-footer bg-light">
-                            <button id='cancel' class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button id='edit' class="btn btn-success">Save</button>
-                        </div>                                      
-                    </div>
-            </div>`
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" >Employee info</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex flex-column" id="modalBody">
+                <label for="name" class="form-label">Name
+                    <input id="name" type="text" class="form-control" value=${name} required maxlength="50">
+                </label>
+                <label for="email" class="form-label">Email
+                    <input id="email" type="email" class="form-control has-validation"  value=${email} required>
+                </label>
+                <label for="address" class="form-label">Address
+                    <textarea id="address" class="form-control" value=${address} requiredmaxlength="60"></textarea>
+                </label>
+                <label for="phone" class="form-label">Phone
+                    <input id="phone" type="tel" class="form-control" value=${phone} pattern="\([0-9]{3}\) [0-9]{4}[ -][0-9]{4}" title="(XXX) XXXX XXXX ó (XXX) XXXX-XXXX"
+                    required>
+                </label>
+            </div>
+            <div class="modal-footer">
+                <button id='cancel' class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button id='edit' class="btn btn-success">Save</button>
+            </div>
+        </div>
+    </div>`
     const cancel = document.getElementById("cancel");
     cancel.onclick = () => {
         modal.classList.add("nomostrar");

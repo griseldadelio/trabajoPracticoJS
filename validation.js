@@ -1,26 +1,3 @@
-const validateEmail = (email) => {
-  const emailExpReg = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-  return emailExpReg.test(email);
-}
-
-const validatePhone = (phone) => {
-  const phoneExpReg = /d\-\s/;
-  return phoneExpReg.test(phone);
-}
-
-const validateName = (name) => {
-  const nameExpReg = /^\s+$/;
-  if (name.length > 50 || name == null || nameExpReg.test(name)) {
-    alert('Ingrese su nombre correctamente')
-  }
-}
-
-const validateAddress = (address) => {
-  if (address.length > 60 || address == null) {
-    alert('Exceso de caracteres')
-  }
-}
-
 const validationForm = () => {
   'use strict'
 
@@ -38,4 +15,21 @@ const validationForm = () => {
     })
 }
 
-validationForm();
+const validateEmail = (email) => {
+  const emailExpReg = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  return email.match(emailExpReg);
+}
+
+const validateName = (name) => {
+  const nameExpReg = /^\s+$/;
+  if (name.length > 50 || name == null || !name.match(nameExpReg)) {
+    document.getElementById("name").innerHTML = `<span class="material-icons">
+    warning</span>Nombre de usuario hasta 50 caracteres`
+  }
+}
+
+const validateAddress = (address) => {
+  if (address.length > 60 || address == null) {
+    alert('Exceso de caracteres')
+  }
+}
