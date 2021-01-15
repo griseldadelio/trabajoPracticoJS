@@ -4,7 +4,7 @@ const deleteIcon = document.getElementsByClassName("delete");
 const form = document.getElementById("formUserInformation");
 const urlBase = 'https://5ff3193428c3980017b18f70.mockapi.io';
 
-const createUser = () => {
+const createEmployee = () => {
     const fullname = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const address = document.getElementById('address').value;
@@ -13,43 +13,42 @@ const createUser = () => {
     return { fullname, email, address, phone }
 }
 
-const validateUser = (user) => {
-    validateName(user.fullname)
-    validateEmail(user.email)
-    validateAddress(user.address)
-    validationForm();
+const validateEmployee = (user) => {
+    validateEmail(user.email);
+    validateName(user.fullname);
+    validateAddress(user.address);
 }
 
 /* Funcion para traer los datos */
 
-const getUsers = () => {
+const getEmployee = () => {
     fetch(`${urlBase}/users`)
         .then(response => response.json())
         .then(data => {
-            showUsers(data)
-            editUsers(data)
-            deleteUsers(data)
+            showEmployee(data)
+            editEmployee(data)
+            setEventDelete(data)
         })
 }
-getUsers()
+getEmployee()
 
 
 /* Funcion para mostrar los usuarios en tabla */
 
-const showUsers = (data) => {
+const showEmployee = (data) => {
     let dataBase = '';
     data.forEach(element => {
         dataBase += `
-        <tr> 
-        <td><input type="checkbox" class="sel"></td>
+        <tr>
+        <td><input type="checkbox" name="check" class="sel" data-employee-id="${element.id}"></td>
         <td>${element.fullname}</td>
         <td>${element.email}</td>
         <td>${element.address}</td>
         <td>${element.phone}</td>
         <td>
-            <i class="material-icons edit bg-warning text-light " id="${element.id}"  title="Edit">&#xE254;</i>
-            <i class="material-icons delete bg-danger text-light" id="${element.id}" title="Delete">&#xE872;</i>
-        </td> 
+            <i class="material-icons edit bg-light text-secondary rounded" id="${element.id}"  title="Edit">&#xE254;</i>
+            <i class="material-icons delete bg-danger text-light rounded" id="${element.id}" title="Delete">&#xE872;</i>
+        </td>
         </tr>`
     });
     tableBody.innerHTML = dataBase;
@@ -58,10 +57,10 @@ const showUsers = (data) => {
 
 /* Funcion para crear Usuario nuevo */
 
-const registerUser = (e) => {
+const registerEmployee = (e) => {
     e.preventDefault()
-    const user = createUser();
-    if (validateUser(user) == false) {
+    const user = createEmployee();
+    if (validateEmployee(user) == false) {
         return
     }
     fetch(`${urlBase}/users`, {
@@ -83,12 +82,12 @@ const registerUser = (e) => {
         })
 }
 
-form.addEventListener('submit', registerUser);
+form.addEventListener('submit', registerEmployee);
 
 
 /* Funcion para editar los datos del Usuario */
 
-const editUsers = (data) => {
+const editEmployee = (data) => {
     for (let i = 0; i < editIcon.length; i++) {
         editIcon[i].onclick = () => {
             const edit = editIcon[i].id
@@ -100,15 +99,15 @@ const editUsers = (data) => {
                     const save = document.getElementById('edit')
 
                     save.onclick = () => {
-                        createUser()
+                        createEmployee()
                         fetch(`${urlBase}/users/${element.id}`, {
                             method: 'PUT',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(createUser()),
+                            body: JSON.stringify(createEmployee()),
                         })
                             .then(response => response.json())
                             .then(data => {
-                                getUsers(data);
+                                getEmployee(data);
                                 toastr.success(`Datos actualizados exitosamente`);
                                 setTimeout(() => {
                                     location.reload()
@@ -123,7 +122,7 @@ const editUsers = (data) => {
 
 /* Funcion para eliminar Usuario */
 
-const deleteUsers = (data) => {
+const setEventDelete = (data) => {
     for (let i = 0; i < deleteIcon.length; i++) {
         deleteIcon[i].onclick = () => {
             const userRemove = deleteIcon[i].id
@@ -144,7 +143,7 @@ const deleteUsers = (data) => {
                                 fetch(`${urlBase}/users`)
                                     .then(response => response.json(data))
                                     .then(data => {
-                                        getUsers(data);
+                                        getEmployee(data);
                                         toastr.success(`Usuario eliminado exitosamente`);
                                         setTimeout(() => {
                                             location.reload()
@@ -158,26 +157,24 @@ const deleteUsers = (data) => {
     }
 }
 
-/*Checkbox general*/
 
 /* Funcion para Filtrar lista de usuarios */
 
-const filterUsers = () => {
+const filterEmployee = () => {
     const selectEmployee = document.getElementById("filter");
     selectEmployee.onkeypress = e => {
-        if (e.keyCode === 13) {
+        if (e.code === "Enter") {
             e.preventDefault();
             fetch(`${urlBase}/users?search=${selectEmployee.value}`)
                 .then(response => response.json())
                 .then(data => {
-                    showUsers(data)
-                    editUsers(data)
-                    deleteUsers(data)
+                    showEmployee(data)
+                    setEventDelete(data)
                 })
         }
     }
 }
-filterUsers()
+filterEmployee()
 
 
 /* Modal para las funciones edit y delete */
