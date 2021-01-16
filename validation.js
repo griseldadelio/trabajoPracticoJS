@@ -9,7 +9,9 @@ const validateName = (name) => {
 }
 
 const validateAddress = (address) => {
-  if (address.length > 60 || address == null) {
-    alert('Exceso de caracteres')
+  const addressExpReg = /[,#-\/\s\!\@\$ ]/gi;
+  if (addressExpReg.test(address)) {
+    return true
   }
+  return false
 }

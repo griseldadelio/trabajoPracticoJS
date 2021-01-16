@@ -1,8 +1,8 @@
-/*CHECKBOX */
 const checkSelectAll = document.getElementById('selectAll');
-const deleteAllBtn = document.getElementById('deleteAll');
+const deleteConfirmModal = document.getElementById('deleteAll');
+const deleteAllBtn = document.getElementById('confirmBtn')
 
-
+/*CHECKBOX select All*/
 const selectAll = (e) => {
     const checks = document.querySelectorAll('.sel');
     toggleDeleteBtn(e.target.checked)
@@ -19,14 +19,13 @@ const selectAll = (e) => {
 
 checkSelectAll.addEventListener('change', selectAll)
 
-/*Delete All button*/
-
+/*Show and Hidden button*/
 const toggleDeleteBtn = (e) => {
     if (e == true) {
-        deleteAllBtn.classList.remove('d-none');
-        deleteAllBtn.classList.add('d-block')
+        deleteConfirmModal.classList.remove('d-none');
+        deleteConfirmModal.classList.add('d-block')
     } else {
-        return deleteAllBtn.classList.add('d-none')
+        return deleteConfirmModal.classList.add('d-none');
     }
 };
 
@@ -42,11 +41,9 @@ const deleteAll = () => {
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
-                    toastr.success(`Usuario eliminado exitosamente`);
-                    setTimeout(() => {
-                        location.reload()
-                    }, 1500);
+                    toastr.success(`Empleado eliminado exitosamente`);
+                    tableBody.innerHTML = "";
+                    getEmployee(data);
                 })
         }
     })

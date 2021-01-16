@@ -4,6 +4,8 @@ const deleteIcon = document.getElementsByClassName("delete");
 const form = document.getElementById("formUserInformation");
 const urlBase = 'https://5ff3193428c3980017b18f70.mockapi.io';
 
+
+/*Construcción del empleado*/
 const createEmployee = () => {
     const fullname = document.getElementById('name').value;
     const email = document.getElementById('email').value;
@@ -13,6 +15,7 @@ const createEmployee = () => {
     return { fullname, email, address, phone }
 }
 
+/*validaciones de datos*/
 const validateEmployee = (user) => {
     validateEmail(user.email);
     validateName(user.fullname);
@@ -54,7 +57,6 @@ const showEmployee = (data) => {
     tableBody.innerHTML = dataBase;
 }
 
-
 /* Funcion para crear Usuario nuevo */
 
 const registerEmployee = (e) => {
@@ -70,11 +72,9 @@ const registerEmployee = (e) => {
         },
         body: JSON.stringify(user)
     })
-        .then(() => {
-            toastr.success(`Usuario registrado exitosamente`)
-            setTimeout(() => {
-                location.reload()
-            }, 3000)
+        .then(data => {
+            toastr.success(`Empleado registrado exitosamente`)
+            getEmployee(data)
         })
         .catch(error => {
             console.error(error)
@@ -88,6 +88,7 @@ form.addEventListener('submit', registerEmployee);
 /* Funcion para editar los datos del Usuario */
 
 const editEmployee = (data) => {
+
     for (let i = 0; i < editIcon.length; i++) {
         editIcon[i].onclick = () => {
             const edit = editIcon[i].id
@@ -99,19 +100,20 @@ const editEmployee = (data) => {
                     const save = document.getElementById('edit')
 
                     save.onclick = () => {
-                        createEmployee()
+                        // const user = createEmployee()
+                        // if (validateEmployee(user) == false) { HAY QUE VER LAS VALIDACIONES PORQUE NO FUNCIONAN ACÁ
+                        //     return
+                        // }
                         fetch(`${urlBase}/users/${element.id}`, {
                             method: 'PUT',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(createEmployee()),
+                            body: JSON.stringify(user),
                         })
                             .then(response => response.json())
                             .then(data => {
+                                toastr.success(`Empleado actualizado exitosamente`);
+                                tableBody.innerHTML = "";
                                 getEmployee(data);
-                                toastr.success(`Datos actualizados exitosamente`);
-                                setTimeout(() => {
-                                    location.reload()
-                                }, 3000);
                             })
                     }
                 }
@@ -119,6 +121,24 @@ const editEmployee = (data) => {
         }
     }
 }
+
+/* Funcion para Filtrar lista de usuarios */
+
+const filterEmployee = () => {
+    const selectEmployee = document.getElementById("filter");
+    selectEmployee.onkeypress = e => {
+        if (e.code === "Enter") {
+            e.preventDefault();
+            fetch(`${urlBase}/users?search=${selectEmployee.value}`)
+                .then(response => response.json())
+                .then(data => {
+                    showEmployee(data)
+                    setEventDelete(data)
+                })
+        }
+    }
+}
+filterEmployee()
 
 /* Funcion para eliminar Usuario */
 
@@ -157,26 +177,6 @@ const setEventDelete = (data) => {
     }
 }
 
-
-/* Funcion para Filtrar lista de usuarios */
-
-const filterEmployee = () => {
-    const selectEmployee = document.getElementById("filter");
-    selectEmployee.onkeypress = e => {
-        if (e.code === "Enter") {
-            e.preventDefault();
-            fetch(`${urlBase}/users?search=${selectEmployee.value}`)
-                .then(response => response.json())
-                .then(data => {
-                    showEmployee(data)
-                    setEventDelete(data)
-                })
-        }
-    }
-}
-filterEmployee()
-
-
 /* Modal para las funciones edit y delete */
 
 const modalNewEmployee = (name = "", email = "", address = "", phone = "") => {
@@ -189,16 +189,16 @@ const modalNewEmployee = (name = "", email = "", address = "", phone = "") => {
             </div>
             <div class="modal-body d-flex flex-column" id="modalBody">
                 <label for="name" class="form-label">Name
-                    <input id="name" type="text" class="form-control" value=${name} required maxlength="50">
+                    <input id="name" type="text" class="form-control" value="${name}" requiredmaxlength="50">
                 </label>
                 <label for="email" class="form-label">Email
-                    <input id="email" type="email" class="form-control has-validation"  value=${email} required>
+                    <input id="email" type="email" class="form-control" value="${email}" required>
                 </label>
                 <label for="address" class="form-label">Address
-                    <textarea id="address" class="form-control" value=${address} requiredmaxlength="60"></textarea>
+                    <textarea id="address" class="form-control" requiredmaxlength="60">${address}</textarea>
                 </label>
                 <label for="phone" class="form-label">Phone
-                    <input id="phone" type="tel" class="form-control" value=${phone} pattern="\([0-9]{3}\) [0-9]{4}[ -][0-9]{4}" title="(XXX) XXXX XXXX ó (XXX) XXXX-XXXX"
+                    <input id="phone" type="tel" class="form-control" value="${phone}" pattern="\([0-9]{3}\) [0-9]{4}[ -][0-9]{4}" title="(XXX) XXXX XXXX ó (XXX) XXXX-XXXX"
                     required>
                 </label>
             </div>
