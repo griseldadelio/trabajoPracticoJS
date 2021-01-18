@@ -43,14 +43,14 @@ const showEmployee = (data) => {
     data.forEach(element => {
         dataBase += `
         <tr>
-        <td><input type="checkbox" name="check" class="sel" data-employee-id="${element.id}"></td>
+        <td><input id="checkbox" type="checkbox" name="check" class="sel" data-employee-id="${element.id}"></td>
         <td>${element.fullname}</td>
         <td>${element.email}</td>
         <td>${element.address}</td>
         <td>${element.phone}</td>
         <td>
-            <i class="material-icons edit bg-light text-secondary rounded" id="${element.id}"  title="Edit">&#xE254;</i>
-            <i class="material-icons delete bg-danger text-light rounded" id="${element.id}" title="Delete">&#xE872;</i>
+            <i type="button" class="material-icons edit bg-light text-secondary rounded me-3" id="${element.id}"  title="Edit">&#xE254;</i>
+            <i type="button" class="material-icons delete bg-danger text-light rounded" id="${element.id}" title="Delete">&#xE872;</i>
         </td>
         </tr>`
     });
@@ -75,6 +75,9 @@ const registerEmployee = (e) => {
         .then(data => {
             toastr.success(`Empleado registrado exitosamente`)
             getEmployee(data)
+            setTimeout(() => {
+                location.reload()
+            }, 2000);
         })
         .catch(error => {
             console.error(error)
@@ -96,14 +99,14 @@ const editEmployee = (data) => {
                 if (element.id == edit) {
                     modal.classList.remove('nomostrar')
                     modalNewEmployee(element.fullname, element.email, element.address, element.phone)
-
                     const save = document.getElementById('edit')
 
                     save.onclick = () => {
-                        // const user = createEmployee()
-                        // if (validateEmployee(user) == false) { HAY QUE VER LAS VALIDACIONES PORQUE NO FUNCIONAN ACÁ
-                        //     return
-                        // }
+                        const user = createEmployee()
+                        if (validateEmployee(user) == false) {
+                            return
+                        }
+
                         fetch(`${urlBase}/users/${element.id}`, {
                             method: 'PUT',
                             headers: { 'Content-Type': 'application/json' },
@@ -114,6 +117,9 @@ const editEmployee = (data) => {
                                 toastr.success(`Empleado actualizado exitosamente`);
                                 tableBody.innerHTML = "";
                                 getEmployee(data);
+                                setTimeout(() => {
+                                    location.reload()
+                                }, 2000);
                             })
                     }
                 }
@@ -167,7 +173,7 @@ const setEventDelete = (data) => {
                                         toastr.success(`Usuario eliminado exitosamente`);
                                         setTimeout(() => {
                                             location.reload()
-                                        }, 3000);
+                                        }, 2000);
                                     })
                             })
                     }
@@ -185,7 +191,6 @@ const modalNewEmployee = (name = "", email = "", address = "", phone = "") => {
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" >Employee info</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body d-flex flex-column" id="modalBody">
                 <label for="name" class="form-label">Name
@@ -213,4 +218,3 @@ const modalNewEmployee = (name = "", email = "", address = "", phone = "") => {
         modal.classList.add("nomostrar");
     };
 };
-

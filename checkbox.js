@@ -19,6 +19,7 @@ const selectAll = (e) => {
 
 checkSelectAll.addEventListener('change', selectAll)
 
+
 /*Show and Hidden button*/
 const toggleDeleteBtn = (e) => {
     if (e == true) {
@@ -31,8 +32,9 @@ const toggleDeleteBtn = (e) => {
 
 /* Eliminación multiple*/
 
-const deleteAll = () => {
+const deleteAll = (e) => {
     const checks = document.querySelectorAll('.sel');
+    toggleDeleteBtn(e.target.checked)
     checks.forEach((cheak) => {
         if (cheak.checked == true) {
             fetch(`${urlBase}/users/${cheak.dataset.employeeId}`, {
