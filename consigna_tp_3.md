@@ -1,5 +1,4 @@
-# trabajoPracticoJs
-# TP JavaScript 2: ABM (alta-baja-modificación) de Personas
+# TP JavaScript: ABM (alta-baja-modificación) de Personas
 
 ## ⚙️ **Ejercicio**
 
